@@ -29,6 +29,165 @@
         width: 100%;
       }
 
+      /* ── Input scene ── */
+      #input-scene {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        animation: popIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.88);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 182, 193, 0.4);
+        border-radius: 24px;
+        padding: 2.5rem 2rem;
+        width: 100%;
+        max-width: 400px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.6rem;
+        box-shadow: 0 8px 32px rgba(220, 80, 100, 0.1);
+      }
+
+      .top-icon {
+        width: 72px;
+        height: 72px;
+        background: linear-gradient(135deg, #ff6b8a, #ff4d6d);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        box-shadow: 0 4px 20px rgba(255, 77, 109, 0.35);
+        animation: heartbeat 1.4s ease-in-out infinite;
+      }
+      @keyframes heartbeat {
+        0%, 100% { transform: scale(1); }
+        14% { transform: scale(1.12); }
+        28% { transform: scale(1); }
+        42% { transform: scale(1.08); }
+      }
+
+      .card-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #d63060;
+        text-align: center;
+        line-height: 1.4;
+      }
+      .card-subtitle {
+        font-size: 13px;
+        color: #e87a9a;
+        text-align: center;
+        margin-top: -1rem;
+        line-height: 1.6;
+      }
+
+      .fields {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .field-wrap {
+        width: 100%;
+        background: rgba(255, 240, 245, 0.7);
+        border: 1px solid rgba(255, 182, 193, 0.5);
+        border-radius: 14px;
+        padding: 12px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+      .field-wrap:focus-within {
+        border-color: #ff6b8a;
+        box-shadow: 0 0 0 3px rgba(255, 107, 138, 0.15);
+        background: rgba(255, 255, 255, 0.95);
+      }
+
+      .field-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: #e87a9a;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      .field-input {
+        width: 100%;
+        border: none;
+        background: transparent;
+        font-size: 15px;
+        color: #333;
+        outline: none;
+        font-family: inherit;
+      }
+      .field-input::placeholder { color: #d4a0b0; }
+
+      .divider {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+      }
+      .divider-line {
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #f9c1d0, transparent);
+      }
+      .divider-heart { font-size: 14px; color: #ffb3c6; }
+
+      .btn-gen {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #ff6b8a, #ff4d6d);
+        color: #fff;
+        border: none;
+        border-radius: 999px;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        letter-spacing: 0.03em;
+        box-shadow: 0 4px 18px rgba(255, 77, 109, 0.4);
+        transition: transform 0.15s, box-shadow 0.15s;
+        overflow: hidden;
+        position: relative;
+      }
+      .btn-gen::after {
+        content: '';
+        position: absolute;
+        top: 0; left: -100%;
+        width: 60%; height: 100%;
+        background: rgba(255, 255, 255, 0.2);
+        transform: skewX(-20deg);
+        animation: shine 3s ease-in-out infinite;
+      }
+      @keyframes shine {
+        0% { left: -100%; }
+        40%, 100% { left: 160%; }
+      }
+      .btn-gen:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(255, 77, 109, 0.5); }
+      .btn-gen:active { transform: translateY(0) scale(0.98); }
+
+      .note {
+        font-size: 12px;
+        color: #e87a9a;
+        text-align: center;
+        line-height: 1.7;
+        background: rgba(255, 182, 193, 0.15);
+        border-radius: 10px;
+        padding: 10px 14px;
+        width: 100%;
+        border: 1px dashed rgba(255, 182, 193, 0.5);
+      }
+
+      /* ── Main question scene ── */
       .scene {
         display: flex;
         flex-direction: column;
@@ -45,15 +204,16 @@
         font-size: 28px;
         animation: pulse 1.4s ease-in-out infinite;
       }
-
       @keyframes pulse {
-        0%,
-        100% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.15);
-        }
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.15); }
+      }
+
+      .from-line {
+        font-size: 14px;
+        font-weight: 600;
+        color: #d05b72;
+        letter-spacing: 0.02em;
       }
 
       .question {
@@ -88,17 +248,10 @@
         border: none;
         border-radius: 999px;
         cursor: pointer;
-        transition:
-          transform 0.1s,
-          background 0.2s;
+        transition: transform 0.1s, background 0.2s;
       }
-      .btn-yes:hover {
-        background: #c03a39;
-        transform: scale(1.05);
-      }
-      .btn-yes:active {
-        transform: scale(0.97);
-      }
+      .btn-yes:hover { background: #c03a39; transform: scale(1.05); }
+      .btn-yes:active { transform: scale(0.97); }
 
       .btn-no {
         padding: 12px 32px;
@@ -115,9 +268,7 @@
         z-index: 99;
         user-select: none;
       }
-      .btn-no:hover {
-        background: #f5f5f5;
-      }
+      .btn-no:hover { background: #f5f5f5; }
 
       .hint {
         font-size: 13px;
@@ -125,32 +276,22 @@
         animation: fadeHint 3s ease-in-out infinite;
       }
       @keyframes fadeHint {
-        0%,
-        100% {
-          opacity: 0.4;
-        }
-        50% {
-          opacity: 1;
-        }
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 1; }
       }
 
+      /* ── Yes scene ── */
       #yes-scene {
         display: none;
         flex-direction: column;
         align-items: center;
         gap: 1.5rem;
         text-align: center;
-        animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       }
+
       @keyframes popIn {
-        0% {
-          transform: scale(0.5);
-          opacity: 0;
-        }
-        100% {
-          transform: scale(1);
-          opacity: 1;
-        }
+        0% { transform: scale(0.5); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
       }
 
       .big-heart {
@@ -158,12 +299,8 @@
         animation: bigPulse 0.8s ease-in-out infinite alternate;
       }
       @keyframes bigPulse {
-        from {
-          transform: scale(1);
-        }
-        to {
-          transform: scale(1.12);
-        }
+        from { transform: scale(1); }
+        to { transform: scale(1.12); }
       }
 
       .love-text {
@@ -178,12 +315,11 @@
         line-height: 1.7;
       }
 
+      /* ── Floating hearts ── */
       .floating-hearts {
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
         pointer-events: none;
         overflow: hidden;
         z-index: 9999;
@@ -194,14 +330,8 @@
         animation: floatUp linear forwards;
       }
       @keyframes floatUp {
-        0% {
-          transform: translateY(0) rotate(0deg);
-          opacity: 1;
-        }
-        100% {
-          transform: translateY(-120vh) rotate(360deg);
-          opacity: 0;
-        }
+        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
       }
 
       .btn-reset {
@@ -214,16 +344,46 @@
         cursor: pointer;
         margin-top: 0.5rem;
       }
-      .btn-reset:hover {
-        background: #f5f5f5;
-      }
+      .btn-reset:hover { background: #f5f5f5; }
     </style>
   </head>
   <body>
     <div id="app">
-      <div class="scene" id="main-scene">
+
+      <!-- Scene 1: กรอกชื่อ -->
+      <div id="input-scene">
+        <div class="card">
+          <div class="top-icon">❤️</div>
+          <p class="card-title">สร้างเว็บรักสุดพิเศษ 🌸</p>
+          <p class="card-subtitle">ใส่ชื่อทั้งสองคน<br>แล้วส่งให้คนที่คุณรักได้เลย 💌</p>
+          <div class="fields">
+            <div class="field-wrap">
+              <span class="field-label">🌷 ชื่อของคุณ (คนสร้างเว็บ)</span>
+              <input class="field-input" id="sender" type="text" placeholder="ชื่อของคุณที่เป็นคนส่งเว็บนี้..." />
+            </div>
+            <div class="divider">
+              <div class="divider-line"></div>
+              <span class="divider-heart">💝</span>
+              <div class="divider-line"></div>
+            </div>
+            <div class="field-wrap">
+              <span class="field-label">💌 ชื่อคนรับ (คนที่จะกดปุ่ม)</span>
+              <input class="field-input" id="receiver" type="text" placeholder="ชื่อคนที่คุณอยากส่งให้..." />
+            </div>
+          </div>
+          <button class="btn-gen" onclick="startLove()">✨ สร้างเว็บรักเลย ✨</button>
+          <div class="note">
+            💡 เมื่อกด YES จะขึ้นว่า<br>
+            <strong style="color:#d63060">"[ชื่อคนรับ] รัก [ชื่อคุณ] จริงๆ" ❤️</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 2: ถามรัก -->
+      <div class="scene" id="main-scene" style="display:none">
         <div class="hearts-row">❤️ 🧡 💛 💚 💙 💜</div>
-        <p class="question">คุณรักเรามั้ย? 🥺</p>
+        <p class="from-line" id="from-line">จาก ... ถึง ...</p>
+        <p class="question" id="question-text">... รักเราใช่มั้ย? 🥺</p>
         <p class="sub">กรุณาตอบให้ตรงๆ นะ</p>
         <div class="btn-row" id="btn-area">
           <button class="btn-yes" onclick="onYes()">YES 💕</button>
@@ -232,21 +392,19 @@
             id="no-btn"
             onmouseenter="runAway()"
             onclick="runAway()"
-          >
-            NO 🙅
-          </button>
+          >NO 🙅</button>
         </div>
         <p class="hint" id="hint-text">ลองเอาเมาส์ไปวาง NO สิ~</p>
       </div>
 
+      <!-- Scene 3: ตอบ YES -->
       <div id="yes-scene">
         <div class="big-heart">❤️</div>
-        <p class="love-text">เราก็รักเธอนะ ❤️</p>
-        <p class="love-sub">
-          ขอบคุณที่ซื่อสัตย์กับหัวใจตัวเอง 🥰<br />รู้สึกดีขึ้นเยอะเลยนะ ฮิๆ
-        </p>
+        <p class="love-text" id="love-text">... รัก ... จริงๆ ❤️</p>
+        <p class="love-sub" id="love-sub">ขอบคุณที่ซื่อสัตย์กับหัวใจตัวเอง 🥰<br>รู้สึกดีขึ้นเยอะเลยนะ ฮิๆ</p>
         <button class="btn-reset" onclick="reset()">ย้อนกลับ</button>
       </div>
+
     </div>
 
     <div class="floating-hearts" id="fh-container"></div>
@@ -256,6 +414,35 @@
       var btnArea = document.getElementById("btn-area");
       var escapeCount = 0;
       var placed = false;
+      var senderName = "";
+      var receiverName = "";
+
+      function startLove() {
+        var s = document.getElementById("sender").value.trim();
+        var r = document.getElementById("receiver").value.trim();
+        if (!s || !r) {
+          alert("กรุณาใส่ชื่อให้ครบทั้งสองช่องนะ 🥺");
+          return;
+        }
+        senderName = s;
+        receiverName = r;
+
+        // ใส่ชื่อในหน้าถามรัก
+        document.getElementById("from-line").textContent = "จาก " + senderName + " 💌 ถึง " + receiverName;
+        document.getElementById("question-text").textContent = receiverName + " รัก" + senderName + "ใช่มั้ย? 🥺";
+
+        // สลับ scene
+        document.getElementById("input-scene").style.display = "none";
+        var ms = document.getElementById("main-scene");
+        ms.style.display = "flex";
+        ms.style.animation = "popIn 0.45s cubic-bezier(0.175,0.885,0.32,1.275)";
+
+        escapeCount = 0;
+        placed = false;
+        noBtn.style.display = "block";
+        document.getElementById("hint-text").textContent = "ลองเอาเมาส์ไปวาง NO สิ~";
+        setTimeout(placeNoBtn, 100);
+      }
 
       function placeNoBtn() {
         if (!placed) {
@@ -266,10 +453,6 @@
         }
       }
 
-      window.addEventListener("load", function () {
-        setTimeout(placeNoBtn, 100);
-      });
-
       function runAway() {
         escapeCount++;
         var margin = 80;
@@ -277,12 +460,9 @@
         var btnH = noBtn.offsetHeight || 50;
         var maxX = window.innerWidth - btnW - margin;
         var maxY = window.innerHeight - btnH - margin;
-        var randX = margin + Math.random() * maxX;
-        var randY = margin + Math.random() * maxY;
-        noBtn.style.left = randX + "px";
-        noBtn.style.top = randY + "px";
+        noBtn.style.left = margin + Math.random() * maxX + "px";
+        noBtn.style.top  = margin + Math.random() * maxY + "px";
 
-        var hint = document.getElementById("hint-text");
         var msgs = [
           "ลองจับ NO อีกทีสิ~ 555",
           "เร็วกว่านี้ได้อีกนะ!",
@@ -291,14 +471,25 @@
           "NO มันไม่อยากให้กด 🏃",
           "กดแต่ YES แล้วกัน! 💕",
         ];
-        hint.textContent = msgs[Math.min(escapeCount - 1, msgs.length - 1)];
+        document.getElementById("hint-text").textContent =
+          msgs[Math.min(escapeCount - 1, msgs.length - 1)];
       }
 
       function onYes() {
         document.getElementById("main-scene").style.display = "none";
         noBtn.style.display = "none";
+
+        // ใส่ชื่อในหน้า YES
+        document.getElementById("love-text").textContent =
+          receiverName + " รัก" + senderName + " จริงๆ ❤️";
+        document.getElementById("love-sub").innerHTML =
+          "จาก <strong style='color:#d63060'>" + senderName + "</strong> ที่ส่งเว็บนี้มาให้ " +
+          "<strong style='color:#d63060'>" + receiverName + "</strong> โดยเฉพาะ 🥰<br>" +
+          "ขอบคุณที่ซื่อสัตย์กับหัวใจตัวเอง ฮิๆ";
+
         var ys = document.getElementById("yes-scene");
         ys.style.display = "flex";
+        ys.style.animation = "popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275)";
         launchHearts();
       }
 
@@ -310,16 +501,13 @@
             setTimeout(function () {
               var el = document.createElement("div");
               el.className = "fh";
-              el.textContent =
-                emojis[Math.floor(Math.random() * emojis.length)];
+              el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
               el.style.left = Math.random() * 100 + "%";
               el.style.fontSize = 16 + Math.random() * 24 + "px";
               var dur = 2 + Math.random() * 3;
               el.style.animation = "floatUp " + dur + "s linear forwards";
               container.appendChild(el);
-              setTimeout(function () {
-                el.remove();
-              }, dur * 1000);
+              setTimeout(function () { el.remove(); }, dur * 1000);
             }, i * 120);
           })(i);
         }
@@ -328,12 +516,9 @@
       function reset() {
         escapeCount = 0;
         placed = false;
-        document.getElementById("main-scene").style.display = "flex";
-        noBtn.style.display = "block";
         document.getElementById("yes-scene").style.display = "none";
-        document.getElementById("hint-text").textContent =
-          "ลองเอาเมาส์ไปวาง NO สิ~";
-        setTimeout(placeNoBtn, 50);
+        document.getElementById("main-scene").style.display = "none";
+        document.getElementById("input-scene").style.display = "flex";
       }
     </script>
   </body>
