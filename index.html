@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>คุณรักเรามั้ย? 🥺</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: #fff0f3;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #app {
+        min-height: 520px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        width: 100%;
+      }
+
+      .scene {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        text-align: center;
+        width: 100%;
+        max-width: 500px;
+      }
+
+      .hearts-row {
+        display: flex;
+        gap: 6px;
+        font-size: 28px;
+        animation: pulse 1.4s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.15);
+        }
+      }
+
+      .question {
+        font-size: 26px;
+        font-weight: 600;
+        color: #333;
+        line-height: 1.4;
+      }
+
+      .sub {
+        font-size: 14px;
+        color: #999;
+        margin-top: -1rem;
+      }
+
+      .btn-row {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        position: relative;
+        width: 100%;
+        justify-content: center;
+        min-height: 56px;
+      }
+
+      .btn-yes {
+        padding: 12px 36px;
+        font-size: 18px;
+        font-weight: 600;
+        background: #e24b4a;
+        color: #fff;
+        border: none;
+        border-radius: 999px;
+        cursor: pointer;
+        transition:
+          transform 0.1s,
+          background 0.2s;
+      }
+      .btn-yes:hover {
+        background: #c03a39;
+        transform: scale(1.05);
+      }
+      .btn-yes:active {
+        transform: scale(0.97);
+      }
+
+      .btn-no {
+        padding: 12px 32px;
+        font-size: 18px;
+        font-weight: 600;
+        background: #f5f5f5;
+        color: #888;
+        border: 1px solid #ddd;
+        border-radius: 999px;
+        cursor: pointer;
+        position: fixed;
+        transition: none;
+        white-space: nowrap;
+        z-index: 99;
+        user-select: none;
+      }
+      .btn-no:hover {
+        background: #f5f5f5;
+      }
+
+      .hint {
+        font-size: 13px;
+        color: #bbb;
+        animation: fadeHint 3s ease-in-out infinite;
+      }
+      @keyframes fadeHint {
+        0%,
+        100% {
+          opacity: 0.4;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      #yes-scene {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        text-align: center;
+        animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      @keyframes popIn {
+        0% {
+          transform: scale(0.5);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .big-heart {
+        font-size: 80px;
+        animation: bigPulse 0.8s ease-in-out infinite alternate;
+      }
+      @keyframes bigPulse {
+        from {
+          transform: scale(1);
+        }
+        to {
+          transform: scale(1.12);
+        }
+      }
+
+      .love-text {
+        font-size: 28px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .love-sub {
+        font-size: 15px;
+        color: #888;
+        line-height: 1.7;
+      }
+
+      .floating-hearts {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 9999;
+      }
+      .fh {
+        position: absolute;
+        bottom: -40px;
+        animation: floatUp linear forwards;
+      }
+      @keyframes floatUp {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-120vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      .btn-reset {
+        padding: 8px 24px;
+        font-size: 14px;
+        background: transparent;
+        border: 1px solid #ddd;
+        border-radius: 999px;
+        color: #999;
+        cursor: pointer;
+        margin-top: 0.5rem;
+      }
+      .btn-reset:hover {
+        background: #f5f5f5;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="scene" id="main-scene">
+        <div class="hearts-row">❤️ 🧡 💛 💚 💙 💜</div>
+        <p class="question">คุณรักเรามั้ย? 🥺</p>
+        <p class="sub">กรุณาตอบให้ตรงๆ นะ</p>
+        <div class="btn-row" id="btn-area">
+          <button class="btn-yes" onclick="onYes()">YES 💕</button>
+          <button
+            class="btn-no"
+            id="no-btn"
+            onmouseenter="runAway()"
+            onclick="runAway()"
+          >
+            NO 🙅
+          </button>
+        </div>
+        <p class="hint" id="hint-text">ลองเอาเมาส์ไปวาง NO สิ~</p>
+      </div>
+
+      <div id="yes-scene">
+        <div class="big-heart">❤️</div>
+        <p class="love-text">เราก็รักเธอนะ ❤️</p>
+        <p class="love-sub">
+          ขอบคุณที่ซื่อสัตย์กับหัวใจตัวเอง 🥰<br />รู้สึกดีขึ้นเยอะเลยนะ ฮิๆ
+        </p>
+        <button class="btn-reset" onclick="reset()">ย้อนกลับ</button>
+      </div>
+    </div>
+
+    <div class="floating-hearts" id="fh-container"></div>
+
+    <script>
+      var noBtn = document.getElementById("no-btn");
+      var btnArea = document.getElementById("btn-area");
+      var escapeCount = 0;
+      var placed = false;
+
+      function placeNoBtn() {
+        if (!placed) {
+          var rect = btnArea.getBoundingClientRect();
+          noBtn.style.left = rect.right + 20 + "px";
+          noBtn.style.top = rect.top + (rect.height - 50) / 2 + "px";
+          placed = true;
+        }
+      }
+
+      window.addEventListener("load", function () {
+        setTimeout(placeNoBtn, 100);
+      });
+
+      function runAway() {
+        escapeCount++;
+        var margin = 80;
+        var btnW = noBtn.offsetWidth || 120;
+        var btnH = noBtn.offsetHeight || 50;
+        var maxX = window.innerWidth - btnW - margin;
+        var maxY = window.innerHeight - btnH - margin;
+        var randX = margin + Math.random() * maxX;
+        var randY = margin + Math.random() * maxY;
+        noBtn.style.left = randX + "px";
+        noBtn.style.top = randY + "px";
+
+        var hint = document.getElementById("hint-text");
+        var msgs = [
+          "ลองจับ NO อีกทีสิ~ 555",
+          "เร็วกว่านี้ได้อีกนะ!",
+          "หัวใจเต้นแรงเลย 😂",
+          "จะจับได้มั้ยเนี่ย?",
+          "NO มันไม่อยากให้กด 🏃",
+          "กดแต่ YES แล้วกัน! 💕",
+        ];
+        hint.textContent = msgs[Math.min(escapeCount - 1, msgs.length - 1)];
+      }
+
+      function onYes() {
+        document.getElementById("main-scene").style.display = "none";
+        noBtn.style.display = "none";
+        var ys = document.getElementById("yes-scene");
+        ys.style.display = "flex";
+        launchHearts();
+      }
+
+      function launchHearts() {
+        var container = document.getElementById("fh-container");
+        var emojis = ["❤️", "🧡", "💛", "💚", "💙", "💜", "🩷", "🤍"];
+        for (var i = 0; i < 30; i++) {
+          (function (i) {
+            setTimeout(function () {
+              var el = document.createElement("div");
+              el.className = "fh";
+              el.textContent =
+                emojis[Math.floor(Math.random() * emojis.length)];
+              el.style.left = Math.random() * 100 + "%";
+              el.style.fontSize = 16 + Math.random() * 24 + "px";
+              var dur = 2 + Math.random() * 3;
+              el.style.animation = "floatUp " + dur + "s linear forwards";
+              container.appendChild(el);
+              setTimeout(function () {
+                el.remove();
+              }, dur * 1000);
+            }, i * 120);
+          })(i);
+        }
+      }
+
+      function reset() {
+        escapeCount = 0;
+        placed = false;
+        document.getElementById("main-scene").style.display = "flex";
+        noBtn.style.display = "block";
+        document.getElementById("yes-scene").style.display = "none";
+        document.getElementById("hint-text").textContent =
+          "ลองเอาเมาส์ไปวาง NO สิ~";
+        setTimeout(placeNoBtn, 50);
+      }
+    </script>
+  </body>
+</html>
